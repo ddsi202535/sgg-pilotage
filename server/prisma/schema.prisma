@@ -59,6 +59,7 @@ model Project {
   directorate       String
   manager           String
   managerId         String?
+  sourceBudget      String?
   description       String?
   dependencies      String[]  @default([])
   createdAt         DateTime  @default(now())
@@ -154,6 +155,7 @@ model Budget {
   budget   Float  @default(0)
   engaged  Float  @default(0)
   spent    Float  @default(0)
+  source   String?    @default("MDD")
 
   @@map("budgets")
 }

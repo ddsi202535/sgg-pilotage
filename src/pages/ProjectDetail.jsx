@@ -14,7 +14,8 @@ import {
   ArrowLeft, Calendar, User, Wallet, FolderOpen, MessageSquare, Paperclip,
   CheckCircle, Clock, AlertCircle, FileText, TrendingUp, Upload, Download, Printer,
   Plus, Pencil, Trash2, X, Save, Send, Link as LinkIcon,
-  Check, Search, Flag, BarChart3, Target as TargetIcon
+  Check, Search, Flag, BarChart3, Target as TargetIcon, 
+  Layers
 } from 'lucide-react'
 
 export default function ProjectDetail() {
@@ -361,9 +362,10 @@ export default function ProjectDetail() {
 
   const infoCards = [
     { label: 'Chef de projet', value: project.manager, icon: User, iconBg: 'icon-bg-blue', iconColor: 'text-blue-600' },
+    { label: 'Source', value: project.sourceBudget || 'MDD', icon: Layers, iconBg: 'bg-orange-50', iconColor: 'text-orange-600' },
     { label: 'Budget', value: `${(project.budget / 1000000).toFixed(1)} MDH`, icon: Wallet, iconBg: 'icon-bg-green', iconColor: 'text-green-600' },
     { label: 'Période', value: `${new Date(project.startDate).toLocaleDateString('fr-FR')} — ${new Date(project.endDate).toLocaleDateString('fr-FR')}`, icon: Calendar, iconBg: 'icon-bg-purple', iconColor: 'text-purple-600', small: true },
-    { label: 'Risques', value: `${projectRisks.length} identifié(s)`, icon: AlertCircle, iconBg: 'icon-bg-orange', iconColor: 'text-orange-600' }
+    { label: 'Risques', value: `${projectRisks.length} identifié(s)`, icon: AlertCircle, iconBg: 'icon-bg-red', iconColor: 'text-red-600' }
   ]
 
   const timeAgo = (date) => {
@@ -412,7 +414,7 @@ export default function ProjectDetail() {
       </div>
 
       {/* Key info cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {infoCards.map((c, i) => (
           <div key={c.label} className={`stat-card stagger-${i+1} animate-slide-up`} style={{ padding: '1rem 1.25rem' }}>
             <div className="flex items-center gap-3">

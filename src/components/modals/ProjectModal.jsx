@@ -11,6 +11,7 @@ const STATUSES = [
   { value: 'en_retard', label: 'En retard' }
 ]
 const DIRECTORATES = ['DT', 'DAJ', 'DICOM', 'DLOG', 'DRH', 'DAFBG', 'DGS']
+const SOURCES = ['MDD', 'INVEST', 'PNUD', 'FONDS ANRT', 'DIO', 'Autre']
 
 const EMPTY_PROJECT = {
   name: '',
@@ -24,6 +25,7 @@ const EMPTY_PROJECT = {
   directorate: '',
   manager: '',
   managerId: '',
+  sourceBudget: 'INVEST',
   description: '',
   dependencies: [],
   deliverables: [''],
@@ -56,6 +58,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, project = null, 
         directorate: project.directorate || '',
         manager: project.manager || '',
         managerId: project.managerId || '',
+        sourceBudget: project.sourceBudget || 'INVEST',
         description: project.description || '',
         dependencies: project.dependencies || [],
         deliverables: project.deliverables?.length ? project.deliverables : [''],
@@ -260,6 +263,22 @@ export default function ProjectModal({ isOpen, onClose, onSave, project = null, 
             {form.budget && !isNaN(form.budget) && (
               <p className="text-xs text-gray-400 mt-1">{(parseFloat(form.budget) / 1000000).toFixed(2)} MDH</p>
             )}
+          </div>
+
+          {/* Source de financement */}
+          <div className="grid grid-cols-1 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                Source de financement
+              </label>
+              <select
+                value={form.sourceBudget}
+                onChange={e => set('sourceBudget', e.target.value)}
+                className="input-field"
+              >
+                {SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
           </div>
 
           {/* Dates */}

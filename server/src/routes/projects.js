@@ -46,6 +46,7 @@ router.get('/', authenticateToken, applyProjectScope, async (req, res) => {
       endDate: p.endDate.toISOString().split('T')[0],
       directorate: p.directorate,
       manager: p.manager,
+      sourceBudget: p.sourceBudget,
       description: p.description,
       phases: p.phases.map(ph => ({ id: ph.id, name: ph.name, status: ph.status, progress: ph.progress })),
       milestones: p.milestones.map(m => ({ id: m.id, name: m.name, date: m.date.toISOString().split('T')[0], status: m.status })),
@@ -105,7 +106,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
 // POST /api/projects — requires creation rights
 router.post('/', authenticateToken, blockReadOnly, authorize('edit_all', 'edit_project', 'edit_programme', 'edit_operational'), async (req, res) => {
   try {
-    const { name, type, programme, programmeId, status, budget, startDate, endDate, directorate, manager, managerId, description, dependencies, phases, deliverables } = req.body
+    const { name, type, programme, programmeId, status, budget, startDate, endDate, directorate, manager, managerId, sourceBudget, description, dependencies, phases, deliverables } = req.body
 
     // Generate next code
     const lastProject = await prisma.project.findFirst({ orderBy: { code: 'desc' } })
@@ -127,6 +128,7 @@ router.post('/', authenticateToken, blockReadOnly, authorize('edit_all', 'edit_p
         directorate: directorate || '',
         manager: manager || '',
         managerId: managerId || null,
+        sourceBudget: sourceBudget || null,
         description: description || '',
         dependencies: Array.isArray(dependencies) ? dependencies : [],
         phases: phases?.length ? {
@@ -158,7 +160,7 @@ router.post('/', authenticateToken, blockReadOnly, authorize('edit_all', 'edit_p
 // PUT /api/projects/:id — chef_proj can only update their own project progress
 router.put('/:id', authenticateToken, blockReadOnly, authorize('edit_all', 'edit_project', 'edit_programme', 'edit_operational'), async (req, res) => {
   try {
-    const { name, type, programme, programmeId, status, physicalProgress, financialProgress, budget, consumed, startDate, endDate, directorate, manager, managerId, description, dependencies } = req.body
+    const { name, type, programme, programmeId, status, physicalProgress, financialProgress, budget, consumed, startDate, endDate, directorate, manager, managerId, sourceBudget, description, dependencies } = req.body
 
     const data = {}
     if (name !== undefined) data.name = name
@@ -175,6 +177,7 @@ router.put('/:id', authenticateToken, blockReadOnly, authorize('edit_all', 'edit
     if (directorate !== undefined) data.directorate = directorate
     if (manager !== undefined) data.manager = manager
     if (managerId !== undefined) data.managerId = managerId
+    if (sourceBudget !== undefined) data.sourceBudget = sourceBudget
     if (description !== undefined) data.description = description
     if (dependencies !== undefined) data.dependencies = Array.isArray(dependencies) ? dependencies : []
 

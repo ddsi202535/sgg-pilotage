@@ -81,6 +81,7 @@ async function main() {
       endDate: new Date('2025-12-31'),
       directorate: 'DT',
       manager: 'Ahmed Bennani',
+      sourceBudget: 'INVEST',
       description: "Mise en place d'une plateforme de dématérialisation des procédures",
       phases: {
         create: [
@@ -123,6 +124,7 @@ async function main() {
       endDate: new Date('2025-08-31'),
       directorate: 'DAJ',
       manager: 'Fatima Zahra Alaoui',
+      sourceBudget: 'MDD',
       description: 'Élaboration et adoption de nouveaux textes juridiques',
       phases: {
         create: [
@@ -164,6 +166,7 @@ async function main() {
       endDate: new Date('2024-12-31'),
       directorate: 'DICOM',
       manager: 'Karim Tazi',
+      sourceBudget: 'FONDS ANRT',
       description: 'Campagne multi-supports de sensibilisation',
       phases: {
         create: [
@@ -206,6 +209,7 @@ async function main() {
       endDate: new Date('2026-08-31'),
       directorate: 'DLOG',
       manager: 'Mohammed Amine Iraqi',
+      sourceBudget: 'DIO',
       description: 'Équipement en matériel informatique des directions régionales',
       phases: {
         create: [
@@ -245,6 +249,7 @@ async function main() {
       endDate: new Date('2025-03-31'),
       directorate: 'DRH',
       manager: 'Salma Benkirane',
+      sourceBudget: 'PNUD',
       description: 'Programme de formation continue des cadres',
       phases: {
         create: [
@@ -341,11 +346,11 @@ async function main() {
   // Create budgets
   await prisma.budget.createMany({
     data: [
-      { name: "Modernisation de l'administration", budget: 15000000, engaged: 8700000, spent: 7200000 },
-      { name: 'Modernisation législative', budget: 5000000, engaged: 1750000, spent: 1400000 },
-      { name: 'Communication publique', budget: 8000000, engaged: 6000000, spent: 5100000 },
-      { name: 'Infrastructure numérique', budget: 25000000, engaged: 1250000, spent: 900000 },
-      { name: 'Développement des compétences', budget: 3000000, engaged: 1500000, spent: 900000 }
+      { name: "Modernisation de l'administration", budget: 15000000, engaged: 8700000, spent: 7200000, source: 'INVEST' },
+      { name: 'Modernisation législative', budget: 5000000, engaged: 1750000, spent: 1400000, source: 'MDD' },
+      { name: 'Communication publique', budget: 8000000, engaged: 6000000, spent: 5100000, source: 'FONDS ANRT' },
+      { name: 'Infrastructure numérique', budget: 25000000, engaged: 1250000, spent: 900000, source: 'DIO' },
+      { name: 'Développement des compétences', budget: 3000000, engaged: 1500000, spent: 900000, source: 'PNUD' }
     ]
   })
 

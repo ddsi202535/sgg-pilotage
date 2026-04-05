@@ -263,11 +263,94 @@ export function DataProvider({ children }) {
     showToast('Risque supprimé', 'error')
   }, [apiMode, showToast])
 
+  // ─── Budget CRUD ──────────────────────────────────────────
+  const addBudgetEntry = useCallback(async (data) => {
+    if (apiMode === 'api') {
+      await budgetAPI.create(data)
+      await loadData()
+      showToast('Allocation ajoutée')
+    } else {
+      const newB = { ...data, id: `B${Date.now()}` }
+      setBudget(prev => ({ ...prev, byProgramme: [...prev.byProgramme, newB] }))
+      showToast('Allocation ajoutée (démo)')
+    }
+  }, [apiMode, loadData, showToast])
+
+  const updateBudgetEntry = useCallback(async (id, data) => {
+    if (apiMode === 'api') {
+      await budgetAPI.update(id, data)
+      await loadData()
+      showToast('Budget mis à jour')
+    } else {
+      setBudget(prev => ({
+        ...prev,
+        byProgramme: prev.byProgramme.map(b => b.id === id ? { ...b, ...data } : b)
+      }))
+      showToast('Budget mis à jour (démo)')
+    }
+  }, [apiMode, loadData, showToast])
+
+  const deleteBudgetEntry = useCallback(async (id) => {
+    if (apiMode === 'api') {
+      await budgetAPI.delete(id)
+      await loadData()
+      showToast('Allocation supprimée', 'error')
+    } else {
+      setBudget(prev => ({
+        ...prev,
+        byProgramme: prev.byProgramme.filter(b => b.id !== id)
+      }))
+      showToast('Allocation supprimée (démo)', 'error')
+    }
+  }, [apiMode, loadData, showToast])
+
+  const addBudgetMonth = useCallback(async (data) => {
+    if (apiMode === 'api') {
+      await budgetAPI.createMonth(data)
+      await loadData()
+      showToast('Suivi mensuel ajouté')
+    } else {
+      const newM = { ...data, id: `M${Date.now()}` }
+      setBudget(prev => ({ ...prev, byMonth: [...prev.byMonth, newM] }))
+      showToast('Suivi ajouté (démo)')
+    }
+  }, [apiMode, loadData, showToast])
+
+  const updateBudgetMonth = useCallback(async (id, data) => {
+    if (apiMode === 'api') {
+      await budgetAPI.updateMonth(id, data)
+      await loadData()
+      showToast('Mois mis à jour')
+    } else {
+      setBudget(prev => ({
+        ...prev,
+        byMonth: prev.byMonth.map(m => m.id === id ? { ...m, ...data } : m)
+      }))
+      showToast('Mois mis à jour (démo)')
+    }
+  }, [apiMode, loadData, showToast])
+
+  const deleteBudgetMonth = useCallback(async (id) => {
+    if (apiMode === 'api') {
+      await budgetAPI.deleteMonth(id)
+      await loadData()
+      showToast('Mois supprimé', 'error')
+    } else {
+      setBudget(prev => ({
+        ...prev,
+        byMonth: prev.byMonth.filter(m => m.id !== id)
+      }))
+      showToast('Mois supprimé (démo)', 'error')
+    }
+  }, [apiMode, loadData, showToast])
+
   return (
     <DataContext.Provider value={{
       projects, risks, kpis, budget, loading, apiMode, toast,
       addProject, updateProject, deleteProject,
       addRisk, updateRisk, deleteRisk,
+      addBudgetEntry, updateBudgetEntry, deleteBudgetEntry,
+      addBudgetMonth, updateBudgetMonth, deleteBudgetMonth,
       reload: loadData
     }}>
       {children}

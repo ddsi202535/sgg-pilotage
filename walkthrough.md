@@ -2,7 +2,7 @@
 
 ## Résumé des changements
 
-L'application a été transformée d'un frontend avec données mock en mémoire vers une **application full-stack opérationnelle** avec backend API et base de données PostgreSQL.
+L'application a été transformée d'un frontend avec données mock en mémoire vers une **application agile de pilotage stratégique full-stack**, alignée sur la hiérarchie budgétaire **LOLF** avec reporting BI avancé et moteur d'alertes intelligent.
 
 ---
 
@@ -93,6 +93,28 @@ La page de détails d'un projet a été rendue **100% opérationnelle** avec per
 | resp@sgg.gov.ma | admin123 | Responsable Programme |
 | chef@sgg.gov.ma | admin123 | Chef de Projet |
 | audit@sgg.gov.ma | admin123 | Audit (lecture seule) |
+
+---
+
+## Modernisation LOLF & BI
+
+L'application respecte désormais la hiérarchie budgétaire officielle :
+**Axe Stratégique** → **Programme Budgétaire** → **Projet** → **Objectif** → **Indicateur (KPI)**.
+
+### Points clés de la mise à jour :
+*   **Tableau de bord intelligent** : KPIs calculés en temps réel (Exécution physique, Budgétaire, Score LdF moyen).
+*   **Suivi LdF** : Arbre stratégique complet avec saisie de réalisations annuelles.
+*   **Moteur d'alertes** : Détection automatique des retards calendaires, dépassements budgétaires et sous-performance des indicateurs LdF.
+*   **UI/UX Premium** : Nouvelle palette de couleurs "Emerald Light" conviviale pour les programmes et refonte visuelle des cartes de performance.
+
+---
+
+## Intégration GitHub
+
+Le projet est versionné et synchronisé avec le dépôt distant :
+*   **Repo** : `https://github.com/ddsi202535/sgg-pilotage.git`
+*   **Fichiers ignorés** : node_modules, .env, uploads/, prisma generated client.
+*   **Branch management** : Master branch initialisée avec tout le code source frontend et backend.
 
 ---
 

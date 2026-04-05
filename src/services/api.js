@@ -129,8 +129,14 @@ export const risksAPI = {
 // ─── Budget ───
 export const budgetAPI = {
   getAll: () => request('/budget'),
-  update: (id, data) =>
-    request(`/budget/${id}`, { method: 'PUT', body: JSON.stringify(data) })
+  create: (data) => request('/budget', { method: 'POST', body: JSON.stringify(data) }),
+  update: (id, data) => request(`/budget/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  delete: (id) => request(`/budget/${id}`, { method: 'DELETE' }),
+
+  // Monthly monitoring
+  createMonth: (data) => request('/budget/month', { method: 'POST', body: JSON.stringify(data) }),
+  updateMonth: (id, data) => request(`/budget/month/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteMonth: (id) => request(`/budget/month/${id}`, { method: 'DELETE' }),
 }
 
 // ─── KPIs ───

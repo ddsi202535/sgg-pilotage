@@ -10,6 +10,7 @@ export default function Projects() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [typeFilter, setTypeFilter] = useState('all')
+  const [sourceFilter, setSourceFilter] = useState('all')
 
   // Modal state
   const [modalOpen, setModalOpen] = useState(false)
@@ -23,7 +24,8 @@ export default function Projects() {
       p.manager.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === 'all' || p.status === statusFilter
     const matchesType = typeFilter === 'all' || p.type === typeFilter
-    return matchesSearch && matchesStatus && matchesType
+    const matchesSource = sourceFilter === 'all' || p.sourceBudget === sourceFilter
+    return matchesSearch && matchesStatus && matchesType && matchesSource
   })
 
   const statusConfig = {
@@ -125,6 +127,14 @@ export default function Projects() {
               <option value="equipement">Équipement</option>
               <option value="organisationnel">Organisationnel</option>
             </select>
+            <select value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value)} className="input-field w-auto">
+              <option value="all">Toutes les sources</option>
+              <option value="MDD">MDD</option>
+              <option value="INVEST">INVEST</option>
+              <option value="PNUD">PNUD</option>
+              <option value="FONDS ANRT">FONDS ANRT</option>
+              <option value="DIO">DIO</option>
+            </select>
           </div>
         </div>
       </div>
@@ -148,6 +158,11 @@ export default function Projects() {
                       {sc.label}
                     </span>
                     {tc && <span className={`badge ${tc.bg} ${tc.text}`}>{tc.label}</span>}
+                    {project.sourceBudget && (
+                      <span className="badge bg-gray-100 text-gray-500 font-bold uppercase text-[9px] tracking-tight">
+                        {project.sourceBudget}
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button onClick={(e) => openEdit(e, project)} className="w-7 h-7 rounded-lg hover:bg-blue-50 flex items-center justify-center text-gray-400 hover:text-blue-600 transition-colors" title="Modifier">
