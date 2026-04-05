@@ -1,16 +1,46 @@
-# React + Vite
+# SGG Pilotage — Système de Pilotage Stratégique LOLF
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application full-stack de pilotage et de suivi des performances budgétaires et opérationnelles du Secrétariat Général du Gouvernement (SGG), alignée sur la hiérarchie **LOLF**.
 
-Currently, two official plugins are available:
+## 🚀 Fonctionnalités Clés
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Hiérarchie LOLF Complète** : Suivi structuré par Axe Stratégique → Programme Budgétaire (121, 140) → Projet → Objectif → Indicateur (KPI).
+- **Tableau de Bord BI Dynamique** : Indicateurs de performance calculés en temps réel (Exécution physique, Consommation budgétaire, Score LdF).
+- **Moteur d'Alertes Intelligent** : Détection automatique des retards, dépassements de seuils et sous-performances avec notifications.
+- **Gestion de Projets Avancée** : Diagrammes de Gantt, gestion des jalons, phases et livrables (avec upload de fichiers).
+- **Suivi Budgétaire** : Vision consolidée des engagements et mandatements par programme et par projet.
+- **Espace Collaboratif** : Commentaires et suivi d'activité sur chaque fiche projet.
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend** : React 18, Vite, Tailwind CSS, Lucide Icons, Recharts.
+- **Backend** : Node.js, Express, Prisma ORM.
+- **Base de données** : PostgreSQL.
+- **Authentification** : JWT (JSON Web Tokens) avec gestion des profils (Admin, SGG, Responsable, Chef de Projet).
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Prérequis
+- Node.js (v18+)
+- PostgreSQL
+
+### 2. Installation du Backend
+```bash
+cd server
+npm install
+# Configurez votre .env (DATABASE_URL)
+npx prisma generate
+npx prisma migrate dev
+npm run dev
+```
+
+### 3. Installation du Frontend
+```bash
+# À la racine
+npm install
+npm run dev
+```
+
+## 🔑 Comptes de Test
+- **Admin** : `hlotf2@sgg.gov.ma` / `azerty`
+- **Audit** : `audit@sgg.gov.ma` / `azerty`
