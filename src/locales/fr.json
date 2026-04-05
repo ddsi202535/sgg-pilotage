@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "projects": "Projets",
+    "budget": "Budget",
+    "risks": "Risques",
+    "bi": "Business Intelligence",
+    "programmes": "Programmes",
+    "strategic": "Suivi LdF",
+    "alerts": "Alertes",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "common": {
+    "search": "Rechercher...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "status": "Statut",
+    "all": "Tous",
+    "actions": "Actions",
+    "back": "Retour",
+    "loading": "Chargement...",
+    "yes": "Oui",
+    "no": "Non"
+  },
+  "project": {
+    "title": "Titre",
+    "manager": "Chef de projet",
+    "budget": "Budget",
+    "period": "Période",
+    "progress": "Progression",
+    "phases": "Phases du projet",
+    "milestones": "Jalons",
+    "risks": "Risques associés",
+    "deliverables": "Livrables",
+    "financial_tracking": "Suivi financier",
+    "gantt": "Diagramme de Gantt",
+    "collaborative_space": "Espace Collaboratif",
+    "files": "Fichiers",
+    "comments": "Commentaires",
+    "add_comment": "Ajouter un commentaire..."
+  },
+  "risk": {
+    "matrix": "Matrice des Risques",
+    "probability": "Probabilité",
+    "impact": "Impact",
+    "low": "Faible",
+    "medium": "Moyen",
+    "high": "Élevé",
+    "critical": "Critique",
+    "mitigation": "Mitigation"
+  },
+  "budget": {
+    "total": "Budget Total",
+    "engaged": "Engagé",
+    "spent": "Consommé",
+    "remaining": "Restant",
+    "api_sync": "Synchronisation e-Budget / GID",
+    "last_sync": "Dernière synchro",
+    "sync_now": "Synchroniser maintenant",
+    "synced_success": "Données synchronisées avec succès"
+  }
+}

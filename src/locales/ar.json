@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "dashboard": "لوحة القيادة",
+    "projects": "المشاريع",
+    "budget": "الميزانية",
+    "risks": "المخاطر",
+    "bi": "ذكاء الأعمال",
+    "programmes": "البرامج",
+    "strategic": "متابعة قانون المالية",
+    "alerts": "التنبيهات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+  "common": {
+    "search": "بحث...",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "status": "الحالة",
+    "all": "الكل",
+    "actions": "إجراءات",
+    "back": "رجوع",
+    "loading": "جاري التحميل...",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "project": {
+    "title": "العنوان",
+    "manager": "مدير المشروع",
+    "budget": "الميزانية",
+    "period": "الفترة",
+    "progress": "التقدم",
+    "phases": "مراحل المشروع",
+    "milestones": "المعالم",
+    "risks": "المخاطر المرتبطة",
+    "deliverables": "المخرجات",
+    "financial_tracking": "التتبع المالي",
+    "gantt": "مخطط جانت",
+    "collaborative_space": "مساحة العمل التعاونية",
+    "files": "الملفات",
+    "comments": "التعليقات",
+    "add_comment": "إضافة تعليق..."
+  },
+  "risk": {
+    "matrix": "مصفوفة المخاطر",
+    "probability": "الاحتمالية",
+    "impact": "التأثير",
+    "low": "ضعيف",
+    "medium": "متوسط",
+    "high": "مرتفع",
+    "critical": "حرج",
+    "mitigation": "التخفيف"
+  },
+  "budget": {
+    "total": "الميزانية الإجمالية",
+    "engaged": "الملتزم بها",
+    "spent": "المستهلكة",
+    "remaining": "المتبقية",
+    "api_sync": "مزامنة e-Budget / GID",
+    "last_sync": "أخر مزامنة",
+    "sync_now": "المزامنة الآن",
+    "synced_success": "تمت مزامنة البيانات بنجاح"
+  }
+}

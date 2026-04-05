@@ -1,0 +1,299 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  password    String
+  name        String
+  profileId   String
+  profileName String
+  permissions String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  comments      Comment[]
+  notifications Notification[]
+
+  @@map("users")
+}
+
+model ProgrammeBudgetaire {
+  id           String   @id @default(uuid())
+  code         String   @unique
+  label        String
+  description  String?
+  budget       Float    @default(0)
+  responsableId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  axeId         String?
+  axe           AxeStrategique?  @relation(fields: [axeId], references: [id], onDelete: SetNull)
+  projects      Project[]
+  biSnapshots   BiSnapshot[]
+
+  @@map("programmes_budgetaires")
+}
+
+model Project {
+  id                String    @id @default(uuid())
+  code              String    @unique
+  name              String
+  type              String
+  programme         String
+  programmeId       String?
+  status            String    @default("planification")
+  physicalProgress  Int       @default(0)
+  financialProgress Int       @default(0)
+  budget            Float     @default(0)
+  consumed          Float     @default(0)
+  startDate         DateTime
+  endDate           DateTime
+  directorate       String
+  manager           String
+  managerId         String?
+  description       String?
+  dependencies      String[]  @default([])
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  programmeBudgetaire ProgrammeBudgetaire? @relation(fields: [programmeId], references: [id], onDelete: SetNull)
+  objectifs    ObjectifStrategique[]
+  phases       Phase[]
+  milestones   Milestone[]
+  risks        Risk[]
+  deliverables Deliverable[]
+  documents    Document[]
+  comments     Comment[]
+
+  @@map("projects")
+}
+
+model Phase {
+  id        String  @id @default(uuid())
+  name      String
+  status    String  @default("pending")
+  progress  Int     @default(0)
+  sortOrder Int     @default(0)
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("phases")
+}
+
+model Milestone {
+  id        String   @id @default(uuid())
+  name      String
+  date      DateTime
+  status    String   @default("pending")
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("milestones")
+}
+
+model Risk {
+  id                 String   @id @default(uuid())
+  code               String   @unique
+  title              String
+  description        String?
+  category           String
+  probability        Int      @default(1)
+  impact             Int      @default(1)
+  level              String   @default("faible")
+  owner              String
+  mitigation         String?
+  mitigationProgress Int      @default(0)
+  status             String   @default("actif")
+  programme          String?
+  projectId          String?
+  project            Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("risks")
+}
+
+model Deliverable {
+  id           String  @id @default(uuid())
+  name         String
+  fileUrl      String?
+  fileType     String?
+  fileSize     Int?
+  originalName String?
+  projectId    String
+  project      Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("deliverables")
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  name         String
+  originalName String?
+  fileUrl      String
+  fileSize     Int
+  fileType     String?
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@map("documents")
+}
+
+model Budget {
+  id       String @id @default(uuid())
+  name     String @unique
+  budget   Float  @default(0)
+  engaged  Float  @default(0)
+  spent    Float  @default(0)
+
+  @@map("budgets")
+}
+
+model BudgetMonth {
+  id     String @id @default(uuid())
+  month  String
+  year   Int
+  budget Float  @default(0)
+  spent  Float  @default(0)
+
+  @@unique([month, year])
+  @@map("budget_months")
+}
+
+model KPI {
+  id     String @id @default(uuid())
+  code   String @unique
+  name   String
+  value  Float  @default(0)
+  unit   String @default("%")
+  target Float  @default(0)
+  trend  String @default("stable")
+
+  @@map("kpis")
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  message   String
+  isRead    Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@map("comments")
+}
+
+// ─── Loi de Finances Hierarchy ──────────────────────────
+
+model AxeStrategique {
+  id                    String                @id @default(uuid())
+  code                  String                @unique
+  label                 String
+  description           String?
+  sortOrder             Int                   @default(0)
+  programmes            ProgrammeBudgetaire[]
+  createdAt             DateTime              @default(now())
+
+  @@map("axes_strategiques")
+}
+
+model ObjectifStrategique {
+  id          String             @id @default(uuid())
+  label       String
+  projectId   String
+  project     Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  cibles      Indicateur[]
+  createdAt   DateTime           @default(now())
+
+  @@map("objectifs_strategiques")
+}
+
+model Indicateur {
+  id          String                @id @default(uuid())
+  label       String
+  unite       String?
+  objectifId  String
+  objectif    ObjectifStrategique   @relation(fields: [objectifId], references: [id], onDelete: Cascade)
+  mesures     MesureAnnuelle[]
+  createdAt   DateTime              @default(now())
+
+  @@map("indicateurs")
+}
+
+model MesureAnnuelle {
+  id            String      @id @default(uuid())
+  annee         Int
+  valeurCible   Float?
+  valeurReel    Float?
+  indicateurId  String
+  indicateur    Indicateur  @relation(fields: [indicateurId], references: [id], onDelete: Cascade)
+
+  @@unique([indicateurId, annee])
+  @@map("mesures_annuelles")
+}
+
+model BiSnapshot {
+  id                    String              @id @default(uuid())
+  programmeBudgetaireId String
+  dateSnapshot          DateTime            @default(now())
+  mois                  Int
+  annee                 Int
+  physicalProgress      Float
+  financialProgress     Float
+  budgetConsomme        Float
+  
+  programmeBudgetaire ProgrammeBudgetaire   @relation(fields: [programmeBudgetaireId], references: [id], onDelete: Cascade)
+
+  @@unique([programmeBudgetaireId, annee, mois])
+  @@map("bi_snapshots")
+}
+
+// ─── Alert Engine ────────────────────────────────────────
+
+model AlertRule {
+  id        String           @id @default(uuid())
+  label     String
+  type      String
+  operator  String
+  threshold Float
+  severity  String           @default("warning")
+  isActive  Boolean          @default(true)
+  projectId String?
+  kpiId     String?
+  createdAt DateTime         @default(now())
+  triggered AlertTriggered[]
+
+  @@map("alert_rules")
+}
+
+model AlertTriggered {
+  id        String    @id @default(uuid())
+  ruleId    String
+  rule      AlertRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+  context   String
+  isRead    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+
+  @@map("alerts_triggered")
+}
