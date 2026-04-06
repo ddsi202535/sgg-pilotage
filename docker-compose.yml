@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: sgg-db
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: sgg_pilotage
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: sgg-server
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://root:root@db:5432/sgg_pilotage?schema=public
+      - JWT_SECRET=sgg_pilotage_secret_2024
+      - PORT=3001
+      - CORS_ORIGIN=http://localhost,http://localhost:80
+    volumes:
+      - server_uploads:/app/uploads
+    ports:
+      - "3001:3001"
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sgg-client
+    restart: always
+    depends_on:
+      - server
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
+  server_uploads:
+
+networks:
+  default:
+    name: sgg-network

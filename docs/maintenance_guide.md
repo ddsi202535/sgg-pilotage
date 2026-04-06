@@ -65,5 +65,25 @@ Copiez l'intégralité du dossier `server/uploads` sur un support externe ou un 
 
 ---
 
+## 🐳 5. Déploiement avec Docker (Production)
+
+L'application peut être lancée entièrement via **Docker Compose**. Cela inclut la base de données, le backend et le frontend (servi par Nginx).
+
+### Lancement Initial
+1. Assurez-vous que Docker Desktop est lancé.
+2. À la racine du projet, exécutez :
+   `docker-compose up --build -d`
+3. L'application sera accessible sur `http://localhost`.
+
+### Commandes Utiles Docker
+- **Voir les logs** : `docker-compose logs -f server`
+- **Arrêter tout** : `docker-compose down`
+- **Réinitialiser la DB Docker** : 
+  `docker-compose exec server npm run db:seed`
+- **Accéder à la DB** : 
+  `docker-compose exec db psql -U root -d sgg_pilotage`
+
+---
+
 > [!WARNING]
 > En cas d'erreur bloquante non listée ici, vérifiez systématiquement les **logs du serveur** via la console de démarrage. Les erreurs Prisma y sont détaillées explicitement.

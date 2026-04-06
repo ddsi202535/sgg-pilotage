@@ -1,0 +1,7 @@
+# Fichiers ignorés par Docker
+node_modules
+npm-debug.log
+.env
+.git
+uploads
+dist
