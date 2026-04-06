@@ -73,7 +73,9 @@ L'application peut être lancée entièrement via **Docker Compose**. Cela inclu
 1. Assurez-vous que Docker Desktop est lancé.
 2. À la racine du projet, exécutez :
    `docker-compose up --build -d`
-3. L'application sera accessible sur `http://localhost`.
+3. **Important** : Pour remplir la base de données avec les données de test (utilisateurs, projets), exécutez :
+   `docker-compose exec server npm run db:seed`
+4. L'application sera accessible sur `http://localhost`.
 
 ### Commandes Utiles Docker
 - **Voir les logs** : `docker-compose logs -f server`
